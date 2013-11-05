@@ -1,0 +1,9 @@
+name:  preprocessor
+version: 0.1.0
+author: Christophe Hurpeau <christophe@hurpeau.com>
+description:  Preprocessor
+homepage: https://github.com/christophehurpeau/dart-preprocessor
+documentation: https://github.com/christophehurpeau/dart-preprocessor/wiki
+dependencies:
+  mutable_string: '>=0.1.0'
+  unittest: '>=0.8.7'
