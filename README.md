@@ -54,6 +54,6 @@ The title blog: /*#val blog.title*/
 Preprocessor p = new Preprocessor('js');
 p.process({ 'DEV': true },"test(/*#val value*/0);")
   .then((String result){
-  	print result;
+  	print(result);
   });
 ```
