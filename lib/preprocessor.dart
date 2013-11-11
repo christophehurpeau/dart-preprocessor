@@ -12,7 +12,16 @@ class Preprocessor{
   Function _pathResolver;
   MultiRegExp _multiRegExp;
   
-  static final List<String> types = [ 'js','php' ];
+  static final List<String> types = [
+      'js', 'php', 'dart',
+      'css', 'less', 'styl', 'scss',
+    ];
+  
+  static final List<String> singleLinesSupportedTypes = [
+      'js', 'php', 'dart',
+      'less', 'styl', 'scss'
+  ];
+  
   static final int errorSourceAhead = 50;
   static final RegExp regExpIfThen = new RegExp(r'^(.*) then (.*)$');
   
@@ -24,7 +33,7 @@ class Preprocessor{
 
     Set<RegExp> regExps = new Set();
     regExps.add(multilineRegExp);
-    if(this._type == 'js' || this._type == 'php') regExps.add(singlelineRegExp);
+    if(singleLinesSupportedTypes.contains(_type)) regExps.add(singlelineRegExp);
     if(this._type == 'js') regExps.add(new RegExp(r'''(^[ \t]*)?(include(?:Once)?)\('([^\)]*)'\)'''));
     
     this._multiRegExp = new MultiRegExp.fromIterable(regExps);

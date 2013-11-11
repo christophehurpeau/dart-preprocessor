@@ -1,5 +1,5 @@
 name:  preprocessor
-version: 0.1.1
+version: 0.1.2
 author: Christophe Hurpeau <christophe@hurpeau.com>
 description:  Preprocessor
 homepage: https://github.com/christophehurpeau/dart-preprocessor
