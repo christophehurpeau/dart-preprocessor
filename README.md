@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/christophehurpeau/dart-preprocessor/status.png)](https://drone.io/github.com/christophehurpeau/dart-preprocessor/latest)
+
 The preprocessor parse the source code and uses comments to build different versions of the same code.
 
 ## Directives
