@@ -25,7 +25,7 @@ class Preprocessor{
   static final int errorSourceAhead = 50;
   static final RegExp regExpIfThen = new RegExp(r'^(.*) then (.*)$');
   
-  Preprocessor(String this._type,[ Function this._pathResolver ]){
+  Preprocessor(String this._type, [ Function this._pathResolver ]){
     var EXPR_INSTRUCTIONS = '(include(?:Once)?|ifn?def|ifelse|if|\/if|endif|else|el(?:se)?if|eval|value|val|setbasedir)';
     
     var multilineRegExp = new RegExp(r'(^[ \t]*)?\/\*[ ]*#[ ]*' + EXPR_INSTRUCTIONS + r'([^\*]*)[ ]*\*\/', multiLine:true);
@@ -33,8 +33,8 @@ class Preprocessor{
 
     Set<RegExp> regExps = new Set();
     regExps.add(multilineRegExp);
-    if(singleLinesSupportedTypes.contains(_type)) regExps.add(singlelineRegExp);
-    if(this._type == 'js') regExps.add(new RegExp(r'''(^[ \t]*)?(include(?:Once)?)\('([^\)]*)'\)'''));
+    if (singleLinesSupportedTypes.contains(_type)) regExps.add(singlelineRegExp);
+    if (this._type == 'js') regExps.add(new RegExp(r'''(^[ \t]*)?(include(?:Once)?)\('([^\)]*)'\)'''));
     
     this._multiRegExp = new MultiRegExp.fromIterable(regExps);
   }
@@ -42,8 +42,10 @@ class Preprocessor{
   static indent(String str, String indent){
     return str.split("\n").map((line) => indent + line).join("\n");
   }
+  
   // TODO : process String instead of data. lines by lines. For multi lines things like if/else/elseif, we know if they should be included or not because we know if the condition is valid.
-  Future<String> process(Map<String,dynamic> defines,String data){
+  Future<String> process(Map<String,dynamic> defines, String data){
+    assert(data != null);
     MutableString mutableData = new MutableString(data);
     
     Completer<String> completerPreprocessor = new Completer();
@@ -75,10 +77,13 @@ class Preprocessor{
          
         case 'ifdef': case 'ifndef': case 'if': case 'ifelse':
           var include;
-          if (instruction=='ifdef') include = defines.containsKey(content);//!!defines[match2[2]];
-          else if (instruction=='ifndef') include = !defines.containsKey(content);//!defines[match2[2]];
-          else if (instruction=='ifelse') include = defines[content] ? 1 : 2;
-          else{
+          if (instruction=='ifdef') {
+            include = defines.containsKey(content);//!!defines[match2[2]];
+          } else if (instruction=='ifndef') {
+            include = !defines.containsKey(content);//!defines[match2[2]];
+          } else if (instruction=='ifelse') {
+            include = defines[content] ? 1 : 2;
+          } else{
             Match ifThenMatch = regExpIfThen.firstMatch(content);
             if(ifThenMatch != null){
               include = defines[ifThenMatch[1]] ? ifThenMatch[2] : '';
@@ -107,18 +112,26 @@ class Preprocessor{
           
           var before = stack.removeFirst();
           var include = match.input.substring(before['end'], match.start);
-          if(before['include'] == 1 || before['include'] == 2){
-            if(include[0]=='(' && include.substring(include.length-1)==')') include = include.substring(1,include.length-1);
+          if (before['include'] == 1 || before['include'] == 2) {
+            if (include[0]=='(' && include.substring(include.length-1)==')') {
+              include = include.substring(1,include.length-1);
+            }
             include = include.split('||');
-            if(include.length != 2) return completer.completeError(new Exception('ifelse : '+include.length+' != 2 : '+include.join('||')));
+            if (include.length != 2) {
+              return completer.completeError(new Exception('ifelse : '+include.length+' != 2 : '+include.join('||')));
+            }
             include = include[before['include']-1];
-          }else if(!before['include']) include='';
+          } else if (!before['include']) {
+            include = '';
+          }
           match.replacePart(before['start'], match.end, include);
           if (instruction == "else" || instruction == "elif" || instruction == "elseif") {
-            if(instruction=='else') include=!before['include'];
-            else{
-              if(content[0]=='!') include = !defines[content.substring(1).trim()];
-              else include = defines[content];
+            if (instruction=='else'){
+              include=!before['include'];
+            } else if(content[0]=='!') {
+              include = !defines[content.substring(1).trim()];
+            } else {
+              include = defines[content];
             }
             stack.add({ "include": !before["include"], "start": match.lastIndex, "lastIndex": match.lastIndex });
           }
@@ -157,8 +170,4 @@ class Preprocessor{
       }, onError: completerPreprocessor.completeError );
     return completerPreprocessor.future;
   }
-}
-
-main(){
-	return (String type,Function pathResolver) => new Preprocessor(type,pathResolver);
 }
