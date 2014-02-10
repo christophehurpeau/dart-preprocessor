@@ -7,62 +7,66 @@ import 'dart:math' as Math;
 import 'package:mutable_string/mutable_string.dart';
 import 'package:multi_reg_exp/multi_reg_exp.dart';
 
-class Preprocessor{
+class Preprocessor {
   String _type;
   Function _pathResolver;
   MultiRegExp _multiRegExp;
-  
+
   static final List<String> types = [
       'js', 'php', 'dart',
       'css', 'less', 'styl', 'scss',
     ];
-  
+
   static final List<String> singleLinesSupportedTypes = [
       'js', 'php', 'dart',
       'less', 'styl', 'scss'
   ];
-  
+
   static final int errorSourceAhead = 50;
   static final RegExp regExpIfThen = new RegExp(r'^(.*) then (.*)$');
-  
+
   Preprocessor(String this._type, [ Function this._pathResolver ]){
     var EXPR_INSTRUCTIONS = '(include(?:Once)?|ifn?def|ifelse|if|\/if|endif|else|el(?:se)?if|eval|value|val|setbasedir)';
-    
+
     var multilineRegExp = new RegExp(r'(^[ \t]*)?\/\*[ ]*#[ ]*' + EXPR_INSTRUCTIONS + r'([^\*]*)[ ]*\*\/', multiLine:true);
     var singlelineRegExp = new RegExp(r'(^[ \t]*)(?:\/\/)?#' + EXPR_INSTRUCTIONS + r'(.*)$', multiLine:true);
 
     Set<RegExp> regExps = new Set();
     regExps.add(multilineRegExp);
-    if (singleLinesSupportedTypes.contains(_type)) regExps.add(singlelineRegExp);
-    if (this._type == 'js') regExps.add(new RegExp(r'''(^[ \t]*)?(include(?:Once)?)\('([^\)]*)'\)'''));
-    
-    this._multiRegExp = new MultiRegExp.fromIterable(regExps);
+    if (singleLinesSupportedTypes.contains(_type)) {
+      regExps.add(singlelineRegExp);
+    }
+    if (this._type == 'js') {
+      regExps.add(new RegExp(r'''(^[ \t]*)?(include(?:Once)?)\('([^\)]*)'\)'''));
+    }
+
+    _multiRegExp = new MultiRegExp.fromIterable(regExps);
   }
-  
-  static indent(String str, String indent){
+
+  static String indent(String str, String indent){
     return str.split("\n").map((line) => indent + line).join("\n");
   }
-  
+
   // TODO : process String instead of data. lines by lines. For multi lines things like if/else/elseif, we know if they should be included or not because we know if the condition is valid.
-  Future<String> process(Map<String,dynamic> defines, String data){
+  Future<String> process(Map<String, dynamic> defines, String data) {
     assert(data != null);
     MutableString mutableData = new MutableString(data);
-    
+
     Completer<String> completerPreprocessor = new Completer();
     Queue stack = new Queue(); // Queue is too sophisticated
-    
-    Future.forEach(mutableData.allMatchesFromMultiRegExp(this._multiRegExp),(MutableStringMatch match){
+
+    Future.forEach(mutableData.allMatchesFromMultiRegExp(this._multiRegExp), (MutableStringMatch match){
       var completer = new Completer<String>();
       String indent = match[1], instruction=match[2], content=match[3].trim();
       //print('Preprocessor, match: '+match[0]+'; instruction = '+ instruction + ', content = '+content+'; string='+mutableData.string);
-      
+
       switch (instruction) {
         case 'eval':
           throw new Exception('instruction "eval" is not supported');
           break;
         case 'value': case 'val':
           String include = defines[content].toString();
-          
+
           int removeAfterLength = 0;
           String first2=match.input.length >= match.end +2 ? match.input.substring(match.end,match.end+2) : null;
           if(first2 != null && first2=='0 ') removeAfterLength = 2;
@@ -70,11 +74,11 @@ class Preprocessor{
           else if(first2 != null && first2=="''") removeAfterLength = 2;
           else if(match.input.length >= match.end +5 && match.input.substring(match.end,match.end+5)=='false') removeAfterLength = 5;
           else if(match.input.length >= match.end +4 && match.input.substring(match.end,match.end+4)=='true') removeAfterLength = 4;
-          
+
           match.replacePart(match.start, match.end + removeAfterLength, include);
           completer.complete();
           break;
-         
+
         case 'ifdef': case 'ifndef': case 'if': case 'ifelse':
           var include;
           if (instruction=='ifdef') {
@@ -101,15 +105,15 @@ class Preprocessor{
               else include = defines[content];
             }
           }
-          
+
           stack.add({ "include": include, "start": match.start, "end": match.end });
           completer.complete();
           break;
-        
+
         case '/if': case 'endif': case 'else': case 'elif': case 'elseif':
           if (stack.length == 0)
             throw new Exception("Unexpected #"+instruction+": "+match.input.substring(match.start, Math.min(match.start + errorSourceAhead,match.input.length))+"...");
-          
+
           var before = stack.removeFirst();
           var include = match.input.substring(before['end'], match.start);
           if (before['include'] == 1 || before['include'] == 2) {
@@ -159,11 +163,11 @@ class Preprocessor{
           }*/
           completer.complete();
           break;
-          
+
         default:
           completer.complete();
       }
-      
+
       return completer.future;
     }).then((_){
         completerPreprocessor.complete(mutableData.string);

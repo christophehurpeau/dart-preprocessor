@@ -2,6 +2,8 @@
 
 The preprocessor parse the source code and uses comments to build different versions of the same code.
 
+See the [auto-generated docs](http://christophehurpeau.github.io/dart-preprocessor/docs/preprocessor.html)
+
 ## Directives
 
 ### if [elseif ]* [ else] endif
