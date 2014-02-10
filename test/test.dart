@@ -3,9 +3,9 @@ import 'package:preprocessor/preprocessor.dart';
 
 void _test(name, defines, data, expected, [type = 'js']){
   test(name,(){
-    Preprocessor p = new Preprocessor(type);
+    String p = new Preprocessor(type);
     p.process(defines, data)
-      .then(expectAsync1((String result){
+      .then(expectAsync((String result){
           expect(result.trim(),expected);
         }), onError: protectAsync1((err) => expect(true, isFalse, reason:err) )
        );

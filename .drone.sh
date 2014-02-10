@@ -4,11 +4,11 @@ dart --version
 pub get
 
 echo "\n> Ensure that the code is warning free"
-dartanalyzer lib/preprocessor.dart
-dartanalyzer test/test.dart
+dartanalyzer lib/preprocessor.dart || exit 1
+dartanalyzer test/test.dart || exit 1
 
 echo "\n> Run tests"
-dart --enable-type-checks --enable-asserts test/test.dart
+dart --enable-type-checks --enable-asserts test/test.dart || exit 1
 
 #echo "> Run build"
 #pub build
