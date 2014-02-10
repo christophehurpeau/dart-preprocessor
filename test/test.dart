@@ -7,7 +7,7 @@ void _test(name, defines, data, expected, [type = 'js']){
     p.process(defines, data)
       .then(expectAsync((String result){
           expect(result.trim(),expected);
-        }), onError: protectAsync1((err) => expect(true, isFalse, reason:err) )
+        }), onError: (err) => expect(true, isFalse, reason:err)
        );
 
   });
