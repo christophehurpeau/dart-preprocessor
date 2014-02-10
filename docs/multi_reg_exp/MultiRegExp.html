@@ -1,0 +1,324 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>MultiRegExp class / multi_reg_exp Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="multi_reg_exp" data-type="MultiRegExp">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../multi_reg_exp.html">multi_reg_exp</a> &rsaquo; <a href="../multi_reg_exp/MultiRegExp.html">MultiRegExp</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>MultiRegExp</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class MultiRegExp implements RegExp {
+ Iterable&lt;RegExp&gt; regExps;
+
+ MultiRegExp(): this.regExps = new List();
+ MultiRegExp.fromIterable(Iterable&lt;RegExp&gt; this.regExps);
+
+ Iterable&lt;Match&gt; allMatches(String input) {
+   return new MultiRegExpIterable.fromString(this, input);
+ }
+ Iterable&lt;Match&gt; allMatchesFromStringContainer(StringContainer stringContainer) {
+   return new MultiRegExpIterable(this, stringContainer);
+ }
+
+ Match firstMatch(String input) {
+   //print('--- MultiRegExp: firstMatch "'+input+'"---');
+   Match found = null, m;
+   for (RegExp regExp in regExps) {
+     m = regExp.firstMatch(input);
+     //print('RegExp= '+regExp.pattern+'; match= '+(m == null ? 'null' : m[0]));
+     if (m != null &amp;&amp; (found == null || m.start &lt; found.start)) {
+       found = m;
+     }
+   }
+   //print('--- MultiRegExp: firstMatch END ---');
+   return found;
+ }
+
+ bool hasMatch(String input) {
+   for (RegExp regExp in this.regExps) {
+     if (regExp.hasMatch(input)) {
+       return true;
+     }
+   }
+   return false;
+ }
+
+ bool get isCaseSensitive =&gt; throw new UnsupportedError('MutliRegExp cannot support isCaseSensitive get');
+
+ bool get isMultiLine =&gt; throw new UnsupportedError('MutliRegExp cannot support isMultiLine get');
+
+ Match matchAsPrefix(String string, [int start = 0]) {
+   Match found = null, m;
+   for (RegExp regExp in this.regExps) {
+     m = regExp.matchAsPrefix(string,start);
+     if (m != null &amp;&amp; (found == null || m.start &lt; found.start)) {
+       found = m;
+     }
+   }
+   return found;
+ }
+
+ String get pattern =&gt; throw new UnsupportedError('MutliRegExp cannot support pattern get');
+
+ String stringMatch(String input) {
+   throw new UnsupportedError('MutliRegExp cannot support stringMatch');
+ }
+}
+</pre>
+</div>
+<h3>Implements</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span>RegExp</span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>MultiRegExp</strong>() <a class="anchor-link" href="#"
+              title="Permalink to MultiRegExp.MultiRegExp">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Constructs a regular expression.</p>
+<p>Throws a <code>FormatException</code> if <code>source</code> is not valid regular
+expression syntax.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+MultiRegExp(): this.regExps = new List();
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="fromIterable">
+<button class="show-code">Code</button>
+new <strong>MultiRegExp.fromIterable</strong>(Iterable&lt;RegExp&gt; regExps) <a class="anchor-link" href="#fromIterable"
+              title="Permalink to MultiRegExp.MultiRegExp.fromIterable">#</a></h4>
+<div class="doc">
+<pre class="source">
+MultiRegExp.fromIterable(Iterable&lt;RegExp&gt; this.regExps);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="isCaseSensitive">
+<button class="show-code">Code</button>
+final bool         <strong>isCaseSensitive</strong> <a class="anchor-link"
+            href="#isCaseSensitive"
+            title="Permalink to MultiRegExp.isCaseSensitive">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Whether this regular expression is case sensitive.</p>
+<p>If the regular expression is not case sensitive, it will match an input
+letter with a pattern letter even if the two letters are different case
+versions of the same letter.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+bool get isCaseSensitive =&gt; throw new UnsupportedError('MutliRegExp cannot support isCaseSensitive get');
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="isMultiLine">
+<button class="show-code">Code</button>
+final bool         <strong>isMultiLine</strong> <a class="anchor-link"
+            href="#isMultiLine"
+            title="Permalink to MultiRegExp.isMultiLine">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Whether this regular expression matches multiple lines.</p>
+<p>If the regexp does match multiple lines, the "^" and "$" characters
+match the beginning and end of lines. If not, the character match the
+beginning and end of the input.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+bool get isMultiLine =&gt; throw new UnsupportedError('MutliRegExp cannot support isMultiLine get');
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="pattern">
+<button class="show-code">Code</button>
+final String         <strong>pattern</strong> <a class="anchor-link"
+            href="#pattern"
+            title="Permalink to MultiRegExp.pattern">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>The pattern of this regular expression.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+String get pattern =&gt; throw new UnsupportedError('MutliRegExp cannot support pattern get');
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="regExps">
+<button class="show-code">Code</button>
+Iterable&lt;RegExp&gt;         <strong>regExps</strong> <a class="anchor-link"
+            href="#regExps"
+            title="Permalink to MultiRegExp.regExps">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+Iterable&lt;RegExp&gt; regExps
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="allMatches">
+<button class="show-code">Code</button>
+Iterable&lt;Match&gt; <strong>allMatches</strong>(String input) <a class="anchor-link" href="#allMatches"
+              title="Permalink to MultiRegExp.allMatches">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns an iterable of the matches of the regular expression on 
+<span class="param">input</span>.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+Iterable&lt;Match&gt; allMatches(String input) {
+ return new MultiRegExpIterable.fromString(this, input);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="allMatchesFromStringContainer">
+<button class="show-code">Code</button>
+Iterable&lt;Match&gt; <strong>allMatchesFromStringContainer</strong>(<a href="../multi_reg_exp/StringContainer.html">StringContainer</a> stringContainer) <a class="anchor-link" href="#allMatchesFromStringContainer"
+              title="Permalink to MultiRegExp.allMatchesFromStringContainer">#</a></h4>
+<div class="doc">
+<pre class="source">
+Iterable&lt;Match&gt; allMatchesFromStringContainer(StringContainer stringContainer) {
+ return new MultiRegExpIterable(this, stringContainer);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="firstMatch">
+<button class="show-code">Code</button>
+Match <strong>firstMatch</strong>(String input) <a class="anchor-link" href="#firstMatch"
+              title="Permalink to MultiRegExp.firstMatch">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Searches for the first match of the regular expression
+in the string 
+<span class="param">input</span>. Returns <code>null</code> if there is no match.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+Match firstMatch(String input) {
+ //print('--- MultiRegExp: firstMatch "'+input+'"---');
+ Match found = null, m;
+ for (RegExp regExp in regExps) {
+   m = regExp.firstMatch(input);
+   //print('RegExp= '+regExp.pattern+'; match= '+(m == null ? 'null' : m[0]));
+   if (m != null &amp;&amp; (found == null || m.start &lt; found.start)) {
+     found = m;
+   }
+ }
+ //print('--- MultiRegExp: firstMatch END ---');
+ return found;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="hasMatch">
+<button class="show-code">Code</button>
+bool <strong>hasMatch</strong>(String input) <a class="anchor-link" href="#hasMatch"
+              title="Permalink to MultiRegExp.hasMatch">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns whether the regular expression has a match in the string 
+<span class="param">input</span>.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+bool hasMatch(String input) {
+ for (RegExp regExp in this.regExps) {
+   if (regExp.hasMatch(input)) {
+     return true;
+   }
+ }
+ return false;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="matchAsPrefix">
+<button class="show-code">Code</button>
+Match <strong>matchAsPrefix</strong>(String string, [int start = 0]) <a class="anchor-link" href="#matchAsPrefix"
+              title="Permalink to MultiRegExp.matchAsPrefix">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Match this pattern against the start of string.</p>
+<p>If 
+<span class="param">start</span> is provided, it must be an integer in the range <code>0</code> ..
+<code>string.length</code>. In that case, this patten is tested against the
+string at the 
+<span class="param">start</span> position. That is, a match is returned if the
+pattern can match a part of the string starting from position 
+<span class="param">start</span>.</p>
+<div class="docs-inherited-from">docs inherited from Pattern </div></div>
+<pre class="source">
+Match matchAsPrefix(String string, [int start = 0]) {
+ Match found = null, m;
+ for (RegExp regExp in this.regExps) {
+   m = regExp.matchAsPrefix(string,start);
+   if (m != null &amp;&amp; (found == null || m.start &lt; found.start)) {
+     found = m;
+   }
+ }
+ return found;
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="stringMatch">
+<button class="show-code">Code</button>
+String <strong>stringMatch</strong>(String input) <a class="anchor-link" href="#stringMatch"
+              title="Permalink to MultiRegExp.stringMatch">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns the first substring match of this regular expression in 
+<span class="param">input</span>.</p>
+<div class="docs-inherited-from">docs inherited from RegExp </div></div>
+<pre class="source">
+String stringMatch(String input) {
+ throw new UnsupportedError('MutliRegExp cannot support stringMatch');
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2014-02-10 16:46:00.305</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

@@ -1,0 +1,175 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>MutableString class / mutable_string Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="mutable_string" data-type="MutableString">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../mutable_string.html">mutable_string</a> &rsaquo; <a href="../mutable_string/MutableString.html">MutableString</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>MutableString</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class MutableString implements StringContainer {
+ String string;
+
+ MutableString(this.string);
+
+ @override
+ Iterable&lt;MutableStringMatch&gt; allMatches(RegExp regExp) {
+   return new MutableStringMatchesIterable(this,regExp);
+ }
+
+ @override
+ Iterable&lt;MutableStringMatch&gt; allMatchesFromMultiRegExp(MultiRegExp multiRegExp) {
+   return new MutableStringMatchesIterable(this,multiRegExp);
+ }
+
+ String substring(int startIndex, [int endIndex]) {
+   return string = string.substring(startIndex, endIndex);
+ }
+
+ String trim() =&gt; string = string.trim();
+
+ String replacePart(int startIndex, int endIndex, [String replacement = '']) {
+   return string = string.substring(0,startIndex)
+       + replacement
+       + string.substring(endIndex);
+ }
+}
+</pre>
+</div>
+<h3>Implements</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span><a href="../multi_reg_exp/StringContainer.html">StringContainer</a></span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>MutableString</strong>(String string) <a class="anchor-link" href="#"
+              title="Permalink to MutableString.MutableString">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Creates a new <code>Object</code> instance.</p>
+<p><code>Object</code> instances have no meaningful state, and are only useful
+through their identity. An <code>Object</code> instance is equal to itself
+only.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+MutableString(this.string);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="string">
+<button class="show-code">Code</button>
+String         <strong>string</strong> <a class="anchor-link"
+            href="#string"
+            title="Permalink to MutableString.string">#</a>
+        </h4>
+        <div class="doc">
+<pre class="source">
+String string
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="allMatches">
+<button class="show-code">Code</button>
+Iterable&lt;<a href="../mutable_string/MutableStringMatch.html">MutableStringMatch</a>&gt; <strong>allMatches</strong>(RegExp regExp) <a class="anchor-link" href="#allMatches"
+              title="Permalink to MutableString.allMatches">#</a></h4>
+<div class="doc">
+<pre class="source">
+@override
+Iterable&lt;MutableStringMatch&gt; allMatches(RegExp regExp) {
+ return new MutableStringMatchesIterable(this,regExp);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="allMatchesFromMultiRegExp">
+<button class="show-code">Code</button>
+Iterable&lt;<a href="../mutable_string/MutableStringMatch.html">MutableStringMatch</a>&gt; <strong>allMatchesFromMultiRegExp</strong>(<a href="../multi_reg_exp/MultiRegExp.html">MultiRegExp</a> multiRegExp) <a class="anchor-link" href="#allMatchesFromMultiRegExp"
+              title="Permalink to MutableString.allMatchesFromMultiRegExp">#</a></h4>
+<div class="doc">
+<pre class="source">
+@override
+Iterable&lt;MutableStringMatch&gt; allMatchesFromMultiRegExp(MultiRegExp multiRegExp) {
+ return new MutableStringMatchesIterable(this,multiRegExp);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="replacePart">
+<button class="show-code">Code</button>
+String <strong>replacePart</strong>(int startIndex, int endIndex, [String replacement = '']) <a class="anchor-link" href="#replacePart"
+              title="Permalink to MutableString.replacePart">#</a></h4>
+<div class="doc">
+<pre class="source">
+String replacePart(int startIndex, int endIndex, [String replacement = '']) {
+ return string = string.substring(0,startIndex)
+     + replacement
+     + string.substring(endIndex);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="substring">
+<button class="show-code">Code</button>
+String <strong>substring</strong>(int startIndex, [int endIndex]) <a class="anchor-link" href="#substring"
+              title="Permalink to MutableString.substring">#</a></h4>
+<div class="doc">
+<pre class="source">
+String substring(int startIndex, [int endIndex]) {
+ return string = string.substring(startIndex, endIndex);
+}
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="trim">
+<button class="show-code">Code</button>
+String <strong>trim</strong>() <a class="anchor-link" href="#trim"
+              title="Permalink to MutableString.trim">#</a></h4>
+<div class="doc">
+<pre class="source">
+String trim() =&gt; string = string.trim();
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2014-02-10 16:46:00.427</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        

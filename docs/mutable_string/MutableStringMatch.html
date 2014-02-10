@@ -1,0 +1,286 @@
+        <!DOCTYPE html>
+        <html>
+        <head>
+                <meta charset="utf-8">
+        <title>MutableStringMatch class / mutable_string Library / Dart Documentation</title>
+        <link rel="stylesheet" type="text/css"
+            href="../styles.css">
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+        <link rel="shortcut icon" href="../favicon.ico">
+        
+        </head>
+        <body data-library="mutable_string" data-type="MutableStringMatch">
+        <div class="page">
+        <div class="header">
+          <a href="../index.html"><div class="logo"></div></a>
+          <a href="../index.html">Dart Documentation</a>
+         &rsaquo; <a href="../mutable_string.html">mutable_string</a> &rsaquo; <a href="../mutable_string/MutableStringMatch.html">MutableStringMatch</a>        <div id="search-box">
+          <input type="search" name="q" id="q" autocomplete="off"
+              class="search-input" placeholder="Search API">
+        </div>
+        
+      </div>
+      <div class="drop-down" id="drop-down"></div>
+      
+        <div class="nav">
+        
+</div>
+<div class="content">
+        <h2><strong>MutableStringMatch</strong>
+          class
+        </h2>
+        
+<button id="show-inherited" class="show-inherited">Hide inherited</button>
+<div class="doc">
+<pre class="source">
+class MutableStringMatch extends Match {
+ final MutableStringMatchesIterable _iterator;
+ final Match _match;
+ final int start;
+ final int end;
+ final String input;
+
+ MutableStringMatch(this._iterator, this._match, this.start, this.end, this.input);
+
+ @override
+ String group(int group) =&gt; _match.group(group);
+
+ @override
+ String operator [](int group) =&gt; _match.group(group);
+
+ @override
+ List&lt;String&gt; groups(List&lt;int&gt; groupIndices) =&gt; _match.groups(groupIndices);
+
+ @override
+ int get groupCount =&gt; _match.groupCount;
+
+ @override
+ Pattern get pattern =&gt; _match.pattern;
+
+ /// Set the iterator's last index
+ set lastIndex(int index) =&gt; _iterator.lastIndex = index;
+
+ /// Get the iterator's last index
+ int get lastIndex =&gt; _iterator.lastIndex;
+
+ void replacePart(int startIndex, int endIndex, [String replacement = '']){
+   _iterator.mutableString.replacePart(startIndex, endIndex, replacement);
+   if (startIndex &lt; this._iterator.lastIndex) { //TODO &lt;= ?
+     _iterator.lastIndex = _iterator.lastIndex - (endIndex - startIndex) + replacement.length;
+   }
+ }
+}
+</pre>
+</div>
+<h3>Extends</h3>
+<p>
+<span class="type-box"><span class="icon-class"></span>Match</span>&nbsp;&gt;&nbsp;<span class="type-box"><span class="icon-class"></span><strong>MutableStringMatch</strong></span></p>
+<div>
+<h3>Constructors</h3>
+<div class="method"><h4 id="">
+<button class="show-code">Code</button>
+new <strong>MutableStringMatch</strong>(<a href="../mutable_string/MutableStringMatchesIterable.html">MutableStringMatchesIterable</a> _iterator, Match _match, int start, int end, String input) <a class="anchor-link" href="#"
+              title="Permalink to MutableStringMatch.MutableStringMatch">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Creates a new <code>Object</code> instance.</p>
+<p><code>Object</code> instances have no meaningful state, and are only useful
+through their identity. An <code>Object</code> instance is equal to itself
+only.</p>
+<div class="docs-inherited-from">docs inherited from Object </div></div>
+<pre class="source">
+MutableStringMatch(this._iterator, this._match, this.start, this.end, this.input);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Properties</h3>
+<div class="field"><h4 id="end">
+<button class="show-code">Code</button>
+final int         <strong>end</strong> <a class="anchor-link"
+            href="#end"
+            title="Permalink to MutableStringMatch.end">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Returns the index in the string after the last character of the
+match.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+final int end
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="groupCount">
+<button class="show-code">Code</button>
+final int         <strong>groupCount</strong> <a class="anchor-link"
+            href="#groupCount"
+            title="Permalink to MutableStringMatch.groupCount">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Returns the number of captured groups in the match.</p>
+<p>Some patterns may capture parts of the input that was used to
+compute the full match. This is the number of captured groups,
+which is also the maximal allowed argument to the <a class="crossref" href="../mutable_string/MutableStringMatch.html#group">group</a> method.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+@override
+int get groupCount =&gt; _match.groupCount;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="input">
+<button class="show-code">Code</button>
+final String         <strong>input</strong> <a class="anchor-link"
+            href="#input"
+            title="Permalink to MutableStringMatch.input">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>The string on which this match was computed.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+final String input
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lastIndex">
+<button class="show-code">Code</button>
+int <strong>get lastIndex</strong> <a class="anchor-link" href="#lastIndex"
+              title="Permalink to MutableStringMatch.get lastIndex">#</a></h4>
+<div class="doc">
+<p>Get the iterator's last index</p>
+<pre class="source">
+int get lastIndex =&gt; _iterator.lastIndex;
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="lastIndex=">
+<button class="show-code">Code</button>
+dynamic <strong>set lastIndex</strong>(int index) <a class="anchor-link" href="#lastIndex="
+              title="Permalink to MutableStringMatch.set lastIndex">#</a></h4>
+<div class="doc">
+<p>Set the iterator's last index</p>
+<pre class="source">
+set lastIndex(int index) =&gt; _iterator.lastIndex = index;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="pattern">
+<button class="show-code">Code</button>
+final Pattern         <strong>pattern</strong> <a class="anchor-link"
+            href="#pattern"
+            title="Permalink to MutableStringMatch.pattern">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>The pattern used to search in <a class="crossref" href="../mutable_string/MutableStringMatch.html#input">input</a>.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+@override
+Pattern get pattern =&gt; _match.pattern;
+</pre>
+</div>
+</div>
+<div class="field"><h4 id="start">
+<button class="show-code">Code</button>
+final int         <strong>start</strong> <a class="anchor-link"
+            href="#start"
+            title="Permalink to MutableStringMatch.start">#</a>
+        </h4>
+        <div class="doc">
+<div class="inherited">
+<p>Returns the index in the string where the match starts.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+final int start
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Operators</h3>
+<div class="method"><h4 id="[]">
+<button class="show-code">Code</button>
+String <strong>operator []</strong>(int group) <a class="anchor-link" href="#[]"
+              title="Permalink to MutableStringMatch.operator []">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns the string matched by the given 
+<span class="param">group</span>.</p>
+<p>If 
+<span class="param">group</span> is 0, returns the match of the pattern.</p>
+<p>Short alias for <code>Match.group</code>.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+@override
+String operator [](int group) =&gt; _match.group(group);
+</pre>
+</div>
+</div>
+</div>
+<div>
+<h3>Methods</h3>
+<div class="method"><h4 id="group">
+<button class="show-code">Code</button>
+String <strong>group</strong>(int group) <a class="anchor-link" href="#group"
+              title="Permalink to MutableStringMatch.group">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns the string matched by the given 
+<span class="param">group</span>.</p>
+<p>If 
+<span class="param">group</span> is 0, returns the match of the pattern.</p>
+<p>The result may be <code>null</code> if the pattern didn't assign a value to it
+as part of this match.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+@override
+String group(int group) =&gt; _match.group(group);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="groups">
+<button class="show-code">Code</button>
+List&lt;String&gt; <strong>groups</strong>(List&lt;int&gt; groupIndices) <a class="anchor-link" href="#groups"
+              title="Permalink to MutableStringMatch.groups">#</a></h4>
+<div class="doc">
+<div class="inherited">
+<p>Returns a list of the groups with the given indices.</p>
+<p>The list contains the strings returned by <a class="crossref" href="../mutable_string/MutableStringMatch.html#group">group</a> for each index in
+
+<span class="param">groupIndices</span>.</p>
+<div class="docs-inherited-from">docs inherited from Match </div></div>
+<pre class="source">
+@override
+List&lt;String&gt; groups(List&lt;int&gt; groupIndices) =&gt; _match.groups(groupIndices);
+</pre>
+</div>
+</div>
+<div class="method"><h4 id="replacePart">
+<button class="show-code">Code</button>
+void <strong>replacePart</strong>(int startIndex, int endIndex, [String replacement = '']) <a class="anchor-link" href="#replacePart"
+              title="Permalink to MutableStringMatch.replacePart">#</a></h4>
+<div class="doc">
+<pre class="source">
+void replacePart(int startIndex, int endIndex, [String replacement = '']){
+ _iterator.mutableString.replacePart(startIndex, endIndex, replacement);
+ if (startIndex &lt; this._iterator.lastIndex) { //TODO &lt;= ?
+   _iterator.lastIndex = _iterator.lastIndex - (endIndex - startIndex) + replacement.length;
+ }
+}
+</pre>
+</div>
+</div>
+</div>
+        </div>
+        <div class="clear"></div>
+        </div>
+        <div class="footer">
+          <div>This page was generated at 2014-02-10 16:46:00.331</div>
+        </div>
+        <script async src="../client-live-nav.js"></script>
+        </body></html>
+        
