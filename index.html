@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Dart-preprocessor : Preprocessor for files in dart" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Dart-preprocessor</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/christophehurpeau/dart-preprocessor">View on GitHub</a>
+
+          <h1 id="project_title">Dart-preprocessor</h1>
+          <h2 id="project_tagline">Preprocessor for files in dart</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/christophehurpeau/dart-preprocessor/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/christophehurpeau/dart-preprocessor/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><a href="https://drone.io/github.com/christophehurpeau/dart-preprocessor/latest"><img src="https://drone.io/github.com/christophehurpeau/dart-preprocessor/status.png" alt="Build Status"></a></p>
+
+<p>The preprocessor parse the source code and uses comments to build different versions of the same code.</p>
+
+<h2>
+<a name="directives" class="anchor" href="#directives"><span class="octicon octicon-link"></span></a>Directives</h2>
+
+<h3>
+<a name="if-elseif---else-endif" class="anchor" href="#if-elseif---else-endif"><span class="octicon octicon-link"></span></a>if [elseif ]* [ else] endif</h3>
+
+<pre><code>/*#if DEV*/
+the DEV code
+/*#else*/
+the PROD code
+/*#/if*/
+
+/*#if test1*/
+when test1 is true
+/*#elseif test2*/
+when test2 is true
+/*#/if*/
+</code></pre>
+
+<h3>
+<a name="if-" class="anchor" href="#if-"><span class="octicon octicon-link"></span></a>if !</h3>
+
+<pre><code>/*#if ! DEV*/
+the PROD code
+/*#else*/
+the DEV code
+/*#/if*/
+</code></pre>
+
+<h3>
+<a name="ifdef-ifndef" class="anchor" href="#ifdef-ifndef"><span class="octicon octicon-link"></span></a>ifdef, ifndef</h3>
+
+<pre><code>/*#ifdef var1*/
+if var1 is defined
+/*#/if*/
+
+/*#ifndef var2*/
+if var2 is not defined
+/*#/if*/
+</code></pre>
+
+<h3>
+<a name="value" class="anchor" href="#value"><span class="octicon octicon-link"></span></a>value</h3>
+
+<pre><code>/*#ifdef blog.title*/
+The title blog: /*#val blog.title*/
+/*#/if*/
+</code></pre>
+
+<h2>
+<a name="api" class="anchor" href="#api"><span class="octicon octicon-link"></span></a>API</h2>
+
+<pre><code>Preprocessor p = new Preprocessor('js');
+p.process({ 'DEV': true },"test(/*#val value*/0);")
+  .then((String result){
+    print(result);
+  });
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Dart-preprocessor maintained by <a href="https://github.com/christophehurpeau">christophehurpeau</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
