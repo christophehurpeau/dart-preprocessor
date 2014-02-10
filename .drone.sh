@@ -11,7 +11,7 @@ echo "\n> Run tests"
 dart --enable-type-checks --enable-asserts test/test.dart || exit 1
 
 #echo "> Run build"
-#pub build
+#pub build || exit 1
 
 echo "\n> Generate docs"
 dartdoc lib/preprocessor.dart --package-root=packages

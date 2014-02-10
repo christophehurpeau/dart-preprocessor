@@ -3,7 +3,7 @@ import 'package:preprocessor/preprocessor.dart';
 
 void _test(name, defines, data, expected, [type = 'js']){
   test(name,(){
-    String p = new Preprocessor(type);
+    Preprocessor p = new Preprocessor(type);
     p.process(defines, data)
       .then(expectAsync((String result){
           expect(result.trim(),expected);
